@@ -1,0 +1,170 @@
+/* Colors */
+:root {
+    --main-color: #51da0b;
+    --dark-bg: #000000;
+    --danger-color: #cc0000;
+    --danger-hover-color: #b60000;
+    --primary-color: #50ca14;
+    --primary-hover-color: #3f9d0b;
+}
+
+/* Selection */
+::selection {
+    background-color: var(--main-color);
+    color: var(--dark-bg);
+}
+
+.section-notfound {
+    background: #000000;
+  }
+
+/* Navbar */
+.navbar {
+    border-bottom: 1px solid var(--main-color);
+}
+
+.navbar-brand {
+    margin-left: 15px;
+}
+
+.navbar-toggler {
+    margin-right: 15px;
+}
+
+.navbar-nav,
+.nav-margin {
+    margin-left: 15px;
+}
+
+.navbar .nav-hover-logout:hover {
+    color: var(--danger-hover-color);
+}
+
+.navbar .nav-hover-select:hover {
+    color: var(--primary-hover-color);
+}
+
+.nav-item {
+    margin-right: 15px;
+}
+
+/* Vanta */
+#vanta {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+/* Body */
+html,
+body {
+    height: 100%;
+    margin: 10px;
+    color: var(--main-color) !important;
+    background-color: var(--dark-bg) !important;
+}
+
+body {
+    font-family: 'Roboto Mono', monospace;
+}
+
+/* Form */
+.form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+.response {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1em;
+}
+
+/* Buttons */
+.btn,
+#transcription-box,
+#response-text {
+    font-family: 'Roboto Mono', monospace;
+    flex: 1 0 8rem;
+}
+
+.btn-danger,
+.btn-primary {
+    border: none !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+    flex: 1 0 4rem;
+    color : var(--dark-bg) !important;
+    font-size: small;
+}
+
+.btn-danger {
+    background-color: var(--danger-color) !important;
+    margin-right: 5px;
+}
+
+.btn-danger:hover {
+    background-color: var(--danger-hover-color) !important;
+}
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+    margin-left: 5px;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-hover-color) !important;
+}
+
+/* Transcription Box */
+#transcription-box {
+    background-color: transparent;
+    border: var(--bs-border-width) solid var(--main-color);
+    color: var(--main-color);
+    box-shadow: 0 0 3px var(--main-color);
+}
+
+/* Audio Player */
+.audio-player {
+    display: none;
+}
+
+/* Response Text */
+#response-text {
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+/* Image */
+.img-fluid {
+    mix-blend-mode: screen;
+    max-width: 60%;
+    /* border-radius: 50%; */
+}
+
+/* Icons */
+.fas,
+.fa {
+    color: var(--dark-bg);
+}
+
+/* Animation */
+@keyframes scale-down {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0.9);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.scale-down {
+    animation: scale-down 1s ease-in-out infinite;
+}

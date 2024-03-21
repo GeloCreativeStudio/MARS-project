@@ -18,5 +18,5 @@ MARS, an innovative AI project from the researchers of EMA EMITS College Philipp
 ---
 <div align="center">
 
-Copyright © 2023 MARS. <br />
+Copyright © 2024 MARS. <br />
 This project is [MIT](./LICENSE) licensed.

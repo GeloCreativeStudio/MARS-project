@@ -1,0 +1,83 @@
+# Editor Files
+.vscode/
+.idea/
+
+# Compiled Python Files
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log
+
+# Environment Files
+.env
+.venv
+env/
+venv/
+
+# Uploads, outputs, and caches
+.uploads/
+.pytest_cache/
+.outputs/
+
+# Backup files
+bak/
+
+# Cache Files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / Packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Testing and Coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# Flask App Instance
+instance/
+
+# Flask Asset Caching
+.webassets-cache
+
+# Sphinx Documentation
+docs/_build/
+
+# Backup Files
+*.bak
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace

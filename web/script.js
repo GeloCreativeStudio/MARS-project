@@ -1,6 +1,62 @@
+let audio, amp, fft
+let isPressed = true
+let myShader
+let angle = 0.0
+let jitter = 0.0
 
-// Prevent default context menu on right click
-// document.addEventListener("contextmenu", (event) => event.preventDefault());
+
+function preload() {
+  audio = loadSound('audio/intro.mp3')
+  myShader = loadShader('shader/vertex.vert', 'shader/fragment.frag')
+  frameRate(60)
+}
+
+function setup() {
+  let canvas = createCanvas(300, 300, WEBGL);
+  canvas.parent('head');
+  canvas.class('canvas')
+
+  // audio.play()
+
+  shader(myShader);
+
+  amp = new p5.Amplitude();
+  fft = new p5.FFT();
+}
+
+function draw() {
+  background(0)
+
+  drawingContext.filter = 'blur(px)'
+
+  console.log(audio.currentTime())
+  fft.analyze()
+
+  const volume = amp.getLevel()
+  let freq = fft.getCentroid()
+
+  freq *= 0.001
+
+  if (second() % 2 == 0) {
+    jitter = random(0, 0.1)
+    jitter += jitter
+  }
+
+  angle = angle + jitter
+
+  rotateX(sin(freq) + angle * 0.1)
+  rotateY(cos(volume) + angle * 0.1)
+
+  const mapF = map(freq, 0, 1, 0, 20)
+  const mapV = map(volume, 0, 0.2, 0, 0.5)
+  console.log()
+  myShader.setUniform('uTime', frameCount)
+
+  myShader.setUniform('uFreq', mapF)
+  myShader.setUniform('uAmp', mapV)
+
+  sphere(100, 400, 400)
+}
 
 // Initialize audio elements
 const rec_play = new Audio("static/sfx/rec_play.mp3");
@@ -26,20 +82,19 @@ $(document).ready(() => {
 
   // Disable button function
   const disableButton = (btn) => {
-    btn.addClass("loading").prop("disabled", true);
+    btn.addClass("no-click").prop("disabled", true);
   };
 
   // Enable button function
   const enableButton = (btn) => {
-    btn.removeClass("loading").prop("disabled", false);
+    btn.removeClass("no-click").prop("disabled", false);
   };
 
   // Setup initial text for AI response
   const setupTypeIt = () => {
     new TypeIt("#response-text", {
       strings: [
-        "Hi there! I'm MARS, your helpful AI voice assistant.",
-        "How can I assist you today?",
+        // "Hi! Ako si MARS, ang kauna-unahang EECPian's AI voice chatbot. Ano ang nais mong itanong?",
       ],
       speed: 1,
       waitUntilVisible: true,
@@ -47,7 +102,7 @@ $(document).ready(() => {
     }).go();
   };
 
-  
+
   // Declare a global variable to store the thread ID
   var thread_id = null;
 
@@ -77,7 +132,6 @@ $(document).ready(() => {
       success: (data) => {
         processingSound.pause();
         processingSound.currentTime = 0;
-        const fileURL = data.audio;
         $("#response-text")[0].innerHTML = "";
 
         // Update conversation with assistant response
@@ -88,9 +142,16 @@ $(document).ready(() => {
           cursorChar: "|",
         }).go();
 
-        audioElement.src = fileURL;
-        audioElement.controls = true;
-        audioElement.play();
+        // const fileURL = data.audio;
+
+        // audioElement.src = fileURL;
+        // audioElement.controls = true;
+        // audioElement.play();
+
+        // Load and play the audio file using p5.js
+        audio = loadSound(data.audio, () => {
+          audio.play();
+        });
 
         enableButton(recordButton);
         enableButton(askButton);
@@ -98,6 +159,7 @@ $(document).ready(() => {
 
         // Update the thread ID with the one returned by the server
         thread_id = data.thread_id;
+
       },
     });
   };
@@ -136,7 +198,7 @@ $(document).ready(() => {
             transcriptionBox.val(data.text);
             // Enable Record button and trigger Ask button click
             enableButton(recordButton);
-            recordButton.html("<i class='fas fa-microphone'></i>");
+            recordButton.html("<i class='ri-mic-line'></i>");
             askButton.click();
           },
         });
@@ -152,7 +214,7 @@ $(document).ready(() => {
       recording = false;
     } else {
       rec_stop.play();
-      recordButton.html("<i class='fas fa-stop'></i>");
+      recordButton.html("<i class='ri-mic-off-line'></i>");
       chunks = [];
       mediaRecorder.start();
       recording = true;

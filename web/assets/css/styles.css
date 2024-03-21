@@ -13,7 +13,7 @@
   --text-color: hsl(219, 8%, 75%);
   --text-color-light: hsl(219, 4%, 55%);
   --white-color: #fff;
-  --body-color: hsl(219, 4%, 4%);
+  --body-color: hsl(240, 5%, 4%);
   --container-color: hsl(219, 4%, 7%);
 
   /*========== Font and typography ==========*/
@@ -25,6 +25,7 @@
   --normal-font-size: .938rem;
   --small-font-size: .813rem;
   --smaller-font-size: .75rem;
+  --smallest-font-size: .625rem;
 
   /*========== Font weight ==========*/
   --font-medium: 500;
@@ -81,6 +82,7 @@ ul {
 
 a {
   text-decoration: none;
+  cursor: pointer;
 }
 
 img {
@@ -188,7 +190,7 @@ img {
     right: -100%;
     width: 100%;
     height: 100%;
-    backdrop-filter: blur(35px);
+    backdrop-filter: blur(64px);
     transition: .3s;
   }
 }
@@ -369,6 +371,51 @@ img {
   color: var(--text-color-light);
 }
 
+.try__button {
+  position: relative;
+  border: 1px solid var(--first-color);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size: var(--small-font-size);
+  color: var(--white-color);
+  font-weight: var(--font-medium);
+}
+
+.try__button i {
+  font-size: 1.25rem;
+  color: var(--text-color);
+}
+
+.try__button::before {
+  content: '';
+  border: 2px solid hsl(113, 100%, 78%);
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  border-radius: 50%;
+  box-shadow: 0 0 12px hsl(113, 100%, 78%);
+  transition: .3s;
+  animation: button 3s infinite;
+}
+
+
+.home__try-description {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size: var(--small-font-size);
+  font-weight: 400;
+  color: var(--text-color-light);
+  margin-top: -1.25rem;
+}
+
 .home .shape__big,
 .home .shape__small{
   position: absolute;
@@ -383,6 +430,65 @@ img {
 .home .shape__small {
   bottom: -10rem;
   right: 3rem;
+}
+
+.img-fluid {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  margin-bottom: 5rem;
+  margin-top: 3rem;
+  mix-blend-mode: screen;
+}
+
+canvas {
+  transform: scale(.9);
+}
+
+.message-description {
+  margin-top: .5rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  font-size: x-small;
+  font-weight: 400;
+  color: var(--text-color-light);
+ }
+
+.message-description i {
+  font-size: .75rem;
+  color: var(--text-color-light);
+  margin-right: .25rem;
+}
+
+#transcription-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  padding: 1rem 1.5rem;
+  border-radius: 1.25rem;
+  border: 1px solid var(--first-color);
+  color: var(--first-color);
+  box-shadow: 0 0 3px var(--first-color);
+  min-height: 4rem;
+  min-width: 70%;
+  resize: none;
+  margin: auto;
+  margin-top: -2rem;
+  font-family: var(--body-font);
+}
+
+
+.audio-player {
+  display: none;
 }
 
 /* Button animate */
@@ -409,6 +515,55 @@ img {
 
 .button:hover {
   background-color: var(--first-color-alt);
+}
+
+.no-click {
+  pointer-events: none;
+}
+
+/*=============== RESPONSE ===============*/
+.response {
+  display: flex;
+  align-items: center;
+  font-size: var(--small-font-size);
+  color: var(--text-color-light);
+  margin-bottom: 1.5rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.response__title {
+  text-align: initial;
+  margin-bottom: 10px;
+}
+
+.response__description {
+  margin-bottom: 2rem;
+  font-size: var(--smaller-font-size);
+}
+
+.response__main {
+  margin-bottom: 1.5rem;
+  font-size: var(--small-font-size);
+}
+
+
+.feedback__description {
+  font-size: var(--smaller-font-size);
+  color: #50ca14;
+  margin-top: 2rem;
+}
+
+.feedback__description:hover{
+  color: var(--first-color-alt);
+}
+
+.feedback__copy {
+  font-size: var(--small-font-size);
+  text-align: center;
+  margin-top: 3rem;
+  display: block;
+  margin-bottom: -3rem;
 }
 
 /*=============== ABOUT ===============*/
@@ -774,6 +929,10 @@ img {
     margin-left: auto;
   }
 
+  #transcription-box {
+    width: 50%;
+  }
+
   .shape__big {
     width: 500px;
     height: 500px;
@@ -852,6 +1011,7 @@ img {
 
   .footer__description {
     max-width: 400px;
+    margin-bottom: 1.5rem;
   }
 
   .footer__logo {

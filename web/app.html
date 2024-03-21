@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--=============== FAVICON ===============-->
+    <link rel="shortcut icon" href="./assets/img/favicon-32x32.png" type="image/x-icon">
+
+    <!--=============== REMIX ICONS ===============-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+
+    <!--=============== SWIPER CSS ===============-->
+    <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css">
+
+    <!--=============== CSS ===============-->
+    <link rel="stylesheet" href="./assets/css/styles.css">
+
+    <!-- p5.js -->
+    <script src="libraries/p5.min.js"></script>
+    <script src="libraries/p5.sound.min.js"></script>
+
+    <title>Multifunctional AI-Responsive System - EECP</title>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js" defer></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+</head>
+
+<body>
+    <!--==================== HEADER ====================-->
+    <header class="header" id="header">
+        <nav class="nav container">
+            <a href="#" class="nav__logo">
+                <i class="ri-circle-fill"></i>
+                MARS
+            </a>
+        </nav>
+
+    </header>
+
+    <!--==================== MAIN ====================-->
+    <main class="main">
+        <!--==================== HOME ====================-->
+        <section class="home section" id="home">
+            <div class="shape shape__big"></div>
+            <div class="shape shape__small"></div>
+            <div class="home__container container grid">
+                <div class="home__data">
+
+                    <h2 class="home__subtitle">
+                        Multifunctional AI-Responsive System
+                    </h2>
+
+                    <h3 class="home__mars">
+                        <i class="ri-voiceprint-line"></i>The first AI Voice Chatbot by EECPian
+                    </h3>
+                </div>
+
+                <h1 class="img-fluid" id="head"></h1>
+
+                <div class="message__container">
+                    <textarea id="transcription-box" class="" placeholder="Your query goes here..." disabled></textarea>
+
+                    <p class="message-description">
+                        <i class="ri-mic-line"></i> to start talking, <i class="ri-mic-off-line"></i> to send your
+                        query.
+                    </p>
+
+                </div>
+
+                <a type="button" class="home__button" id="record-button">
+                    <i class="ri-mic-line"></i>
+                </a>
+
+                <button type="button" style="display: none;" id="ask-button"></button>
+
+                <p class="home__button-description">
+                    TALK TO MARS
+                </p>
+
+                <!-- Audio Player -->
+                <div class="audio-player">
+                    <audio id="audio-element"></audio>
+                </div>
+
+
+            </div>
+        </section>
+
+        <!--==================== RESPONSE ====================-->
+        <section class="section" id="response">
+            <div class="response">
+
+                <div class="about__data">
+                    <h2 class="section__title response__title">
+                        <i class="ri-message-3-line"></i> MARS Response:
+                    </h2>
+
+                    <p class="response__description">
+                        Sometimes MARS might mishear you, so please double-check his responses.
+                        <!-- <br>If something doesn't make sense, it's likely because he misheard you. -->
+                    </p>
+
+                    <p class="response__main" id="response-text"></p>
+                </div>
+            </div>
+        </section>
+
+        <!--==================== FOOTER ====================-->
+        <footer class="footer section">
+            <div class="shape shape__big"></div>
+            <div class="shape shape__small"></div>
+
+            <div class="footer__container container grid">
+                <div class="footer__content">
+                    <a href="#" class="footer__logo">
+                        <i class="ri-circle-fill"></i>
+                        MARS
+                    </a>
+                    <p class="footer__description">
+                        MARS is currently in its initial version. Expect more exciting features coming soon.
+                    </p>
+                    <a href="https://grvu4q3ipr8.typeform.com/to/Fwi5eCUT" class="feedback__description">
+                        <i class="ri-feedback-line"></i> Give us feedback
+                    </a>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">
+                        Research & Development
+                    </h3>
+                    <ul class="footer__links">
+                        <li>
+                            <a href="https://www.facebook.com/janine.lozano.35" class="footer__link">Alysa Janine Linga</a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/althea.baliwas" class="footer__link">Althea Baliwas</a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/mejico.aram" class="footer__link">Aram Neftali Mejico</a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/alm1017" class="footer__link">Angelo Manalo</a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/profile.php?id=100093702846439" class="footer__link">Billy Yndrew Justiniano</a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/kathrynleigh.guavesii" class="footer__link">Kathryn Leigh Guavez</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer__content">
+                    <h3 class="footer__title">
+                        BSCS Instructors
+                    </h3>
+                    <ul class="footer__links">
+                        <li>
+                            <a href="https://www.facebook.com/hartzell.majaba.5" class="footer__link">Hartzell Majaba</a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/jnpdrck" class="footer__link">John Pedrick Hilot</a>
+                        </li>
+                        <li>
+                            <a href="https://www.facebook.com/johnmark.galang.7" class="footer__link">Mark Galang</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+            <span class="footer__copy">
+                &copy; 2024 MARS. All rights reserved.
+            </span>
+        </footer>
+
+
+        <!--========== SCROLL UP ==========-->
+        <a href="#" class="scrollup" id="scroll-up">
+            <i class="ri-arrow-up-s-line scrollup__icon"></i>
+        </a>
+
+        <!--=============== SCROLL REVEAL ===============-->
+        <script src="./assets/js/scrollreveal.min.js"></script>
+
+        <!--=============== SWIPER JS ===============-->
+        <script src="./assets/js/swiper-bundle.min.js"></script>
+
+        <!--=============== MIXITUP JS ===============-->
+        <script src="./assets/js/mixitup.min.js"></script>
+
+        <!--=============== MAIN JS ===============-->
+        <script src="./assets/js/main.js"></script>
+
+
+        <script src="script.js" defer></script>
+
+        <!--=============== P5 ===============-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+
+</body>
+
+</html>

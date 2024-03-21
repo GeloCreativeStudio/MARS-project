@@ -1,0 +1,19 @@
+site_name: Mars Assistant
+theme:
+  name: material
+  palette:
+    scheme: slate
+
+nav:
+  - Home: index.md
+  - Architecture Overview: architecture.md
+  - Installation and Deployment:
+    - installation.md
+    - deployment.md
+  - Configuration Management: configuration.md
+  - Logging and Monitoring: logging.md
+  - Scaling and Load Balancing: scaling.md
+  - Maintenance Tasks: maintenance.md
+  - Troubleshooting and Error Handling: troubleshooting.md
+  - Security Considerations: security.md
+  - API Reference: api.md

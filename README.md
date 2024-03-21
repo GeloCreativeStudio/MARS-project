@@ -1,6 +1,6 @@
 <div align="center">
 
-<img height="300" src="./static/images/favicon/android-chrome-512x512-label.png">
+<img height="300" src="./static/favicon/android-chrome-512x512-label.png">
 
 <sup>Multifunctional AI Responsive System</sup>
 

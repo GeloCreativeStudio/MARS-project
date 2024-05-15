@@ -11,6 +11,8 @@
 
 MARS, the Multifunctional AI Responsive System, represents the forefront of AI innovation. Developed by researchers at EMA EMITS College Philippines, MARS leverages the Flask Python framework and the advanced GPT-3.5-turbo language model. Its mission? Seamlessly integrating Text-to-Speech (TTS), Speech-to-Text (STT), and the world's most advanced Language Model (LLM) to deliver an unparalleled voice AI assistant experience.
 
+<img src="image\conceptual-model.svg" alt="MARS Conceptual Model">
+
 ---
 
 **Note: MARS is currently in its developmental phase, with ongoing efforts dedicated to its refinement and enhancement.**

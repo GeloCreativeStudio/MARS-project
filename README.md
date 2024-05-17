@@ -2,7 +2,7 @@
 
 <img height="100" src="./static/favicon/android-chrome-512x512-label.png" alt="MARS Logo">
 
-# MARS - Multifunctional AI Responsive System
+# Multifunctional AI Responsive System
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)

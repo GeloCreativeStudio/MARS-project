@@ -508,10 +508,22 @@ canvas {
   background-color: var(--first-color);
   color: var(--body-color);
   padding: 1rem 2rem;
-  border-radius: .25rem;
+  border-radius: 1rem;
   font-size: var(--normal-font-size);
   transition: .3s;
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto; /* Centers the container horizontally */
+  width: 50%;
+  max-width: 50%; /* Ensures the container doesn't exceed the parent width */
+  height: 100%;
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
+}
+
 
 .button:hover {
   background-color: var(--first-color-alt);

@@ -508,9 +508,10 @@ canvas {
   background-color: var(--first-color);
   color: var(--body-color);
   padding: 1rem 2rem;
-  border-radius: 1rem;
+  border-radius: 2rem;
   font-size: var(--normal-font-size);
-  transition: .3s;
+  transition: color .3s; /* Transition for text color change */
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.378);
 }
 
 .button-container {
@@ -526,12 +527,15 @@ canvas {
 
 
 .button:hover {
-  background-color: var(--first-color-alt);
+  background-color: hsl(240, 5%, 4%);
+  color: #fff; /* Change text color to white on hover */
 }
 
 .no-click {
   pointer-events: none;
 }
+
+
 
 /*=============== RESPONSE ===============*/
 .response {
@@ -721,7 +725,7 @@ canvas {
 /*=============== LOGOS ===============*/
 
 .logos__img {
-  width: 48px;
+  filter: grayscale(100%);
   opacity: .4;
   transition: .3s;
 }

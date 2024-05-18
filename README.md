@@ -9,13 +9,14 @@
 [![Flask Version](https://img.shields.io/badge/flask-2.0.3-green)](https://flask.palletsprojects.com/)
 [![GPT-4-turbo](https://img.shields.io/badge/GPT--4--turbo-advanced-blueviolet)](https://openai.com/)
 
-MARS - Multifunctional AI Responsive System, is a pioneer of AI research represents the forefront of AI innovation in Oriental Mindoro. Developed by researchers at EMA EMITS College Philippines, MARS leverages the Flask Python framework and the advanced GPT-3.5-turbo language model. Its mission? Seamlessly integrating Text-to-Speech (TTS), Speech-to-Text (STT), and the world's most advanced Large Language Model (LLM) to deliver an unparalleled voice AI assistant experience.
+<img src="image\MARS-D1.jpg" alt="MARS Conceptual Model">
 
-<img src="image\conceptual-model.svg" alt="MARS Conceptual Model">
+MARS utilizes the state-of-the-art capabilities of GPT-4-turbo, an advanced language model developed by OpenAI. Its mission is to seamlessly integrate Text-to-Speech (TTS), Speech-to-Text (STT) to provide an exceptional voice AI assistant experience. Leveraging cutting-edge AI technologies, MARS can deliver natural and intelligent interactions like a real person.
+
 
 ---
 
-**Note: MARS is currently in its developmental phase, with ongoing efforts dedicated to its refinement and enhancement.**
+**Note: MARS is currently in its developmental phase, with ongoing efforts dedicated to its refinement and enhancement.** <a href="image/conceptual-model.svg">View Diagram</a>
 
 </div>
 

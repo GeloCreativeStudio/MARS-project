@@ -7,12 +7,11 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
 [![Flask Version](https://img.shields.io/badge/flask-2.0.3-green)](https://flask.palletsprojects.com/)
-[![GPT-4-turbo](https://img.shields.io/badge/GPT--4--turbo-advanced-blueviolet)](https://openai.com/)
+[![Language Model](https://img.shields.io/badge/Language--Model-latest-blueviolet)](https://openai.com/)
 
 <img src="image\MARS-D1.jpg" alt="MARS Conceptual Model">
 
-MARS utilizes the state-of-the-art capabilities of GPT-4-turbo, an advanced language model developed by OpenAI. Its mission is to seamlessly integrate Text-to-Speech (TTS), Speech-to-Text (STT) to provide an exceptional voice AI assistant experience. Leveraging cutting-edge AI technologies, MARS can deliver natural and intelligent interactions like a real person.
-
+MARS utilizes the state-of-the-art capabilities of Language Models. Its mission is to seamlessly integrate Large Language Model (LLM), Text-to-Speech (TTS), Speech-to-Text (STT) to provide an exceptional voice AI assistant experience with fast inference speed. Leveraging these cutting-edge AI technologies, MARS can deliver natural and intelligent interactions like a real person.
 
 ---
 
@@ -24,8 +23,7 @@ MARS utilizes the state-of-the-art capabilities of GPT-4-turbo, an advanced lang
 
 - **Text-to-Speech (TTS)**: Converts written text into natural-sounding speech.
 - **Speech-to-Text (STT)**: Transforms spoken language into text with high accuracy.
-- **Large Language Model (LLM)**: Utilizes GPT-4-turbo for sophisticated language understanding and generation.
-
+- **Large Language Model (LLM)**: Utilizes Language Model for sophisticated language understanding and generation.
 
 ---
 

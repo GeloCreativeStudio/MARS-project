@@ -21,8 +21,8 @@ MARS utilizes the state-of-the-art capabilities of Language Models. Its mission 
 
 ---
 
-> [!NOTE]
-> MARS is currently in its developmental phase, with ongoing efforts dedicated to its refinement and enhancement. 
+> [!IMPORTANT]
+> MARS is currently in its developmental phase, with ongoing efforts dedicated to its refinement and enhancement.
 
 **<a href="static\conceptual-model.svg">View Diagram</a>**
 

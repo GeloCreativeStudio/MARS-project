@@ -1,37 +1,31 @@
 <div align="center">
 
-<!-- <img height="100" src="./static/favicon/android-chrome-512x512-label.png" alt="MARS Logo">
-
-# Multifunctional AI Responsive System -->
-
-<!-- [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
-[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/)
-[![Artificial Intelligence](https://img.shields.io/badge/Artificial--Intelligence-advanced-green)](https://openai.com/)
-[![Language Model](https://img.shields.io/badge/Language--Model-latest-blueviolet)](https://openai.com/) -->
-
 <h1 align="center">○</h1>
 
 <p align="center">
     <strong>The future is here.</strong><br>
 </p>
 
-<img src="static\MARS-D2-gradient.jpg" alt="MARS Conceptual Model">
+<img src="static/MARS-D3.jpg" alt="MARS Conceptual Model" width="600" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 10px;">
 
-MARS utilizes the state-of-the-art capabilities of Language Models. Its mission is to seamlessly integrate Large Language Model (LLM), Text-to-Speech (TTS), Speech-to-Text (STT) to provide an exceptional voice AI assistant experience with fast inference speed. Leveraging these cutting-edge AI technologies, MARS can deliver natural and intelligent interactions like a real person.
+<p align="center">
+    <strong>MARS</strong> leverages state-of-the-art Language Models to seamlessly integrate Large Language Model <strong>(LLM)</strong>, Text-to-Speech <strong>(TTS)</strong>, and Speech-to-Text <strong>(STT)</strong> technologies. This powerful combination provides an exceptional voice AI assistant experience with rapid inference speeds. By utilizing these cutting-edge AI technologies, MARS delivers natural and intelligent interactions, mimicking human conversation.
+</p>
 
 ---
 
-
-
-**Note: MARS is currently in its developmental phase, with ongoing efforts dedicated to its refinement and enhancement.<br><a href="static\conceptual-model.svg">View Diagram</a>**
+<p align="center">
+    <strong>Note:</strong> MARS is currently in its <strong>developmental</strong> phase, with ongoing efforts dedicated to its refinement and enhancement.<br>
+    <br><a href="static/conceptual-model.svg">View Diagram</a>
+</p>
 
 </div>
 
 ## Features
 
 - **Text-to-Speech (TTS)**: Converts written text into natural-sounding speech.
-- **Speech-to-Text (STT)**: Transforms spoken language into text with high accuracy.
-- **Large Language Model (LLM)**: Utilizes Language Model for sophisticated language understanding and generation.
+- **Speech-to-Text (STT)**: Accurately transforms spoken language into text.
+- **Large Language Model (LLM)**: Provides sophisticated language understanding and generation capabilities.
 
 ---
 

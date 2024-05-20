@@ -6,7 +6,7 @@
     <strong>The future is here.</strong><br>
 </p>
 
-<img src="static/MARS-D3.jpg" alt="MARS Conceptual Model" width="600" style="border-radius: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 10px;">
+<img src="static/MARS-D3.jpg" alt="MARS Conceptual Model" width="auto" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 10px;">
 
 <p align="center">
     <strong>MARS</strong> leverages state-of-the-art Language Models to seamlessly integrate Large Language Model <strong>(LLM)</strong>, Text-to-Speech <strong>(TTS)</strong>, and Speech-to-Text <strong>(STT)</strong> technologies. This powerful combination provides an exceptional voice AI assistant experience with rapid inference speeds. By utilizing these cutting-edge AI technologies, MARS delivers natural and intelligent interactions, mimicking human conversation.

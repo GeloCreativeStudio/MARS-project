@@ -6,6 +6,10 @@
     <strong>The future is here.</strong><br>
 </p>
 
+![GitHub license](https://img.shields.io/github/license/GeloCreativeStudio/MARS-project)
+![Artificial Intelligence](https://img.shields.io/badge/Artificial-Intelligence-green)
+![GitHub last commit](https://img.shields.io/github/last-commit/GeloCreativeStudio/MARS-project)
+
 <img src="static/MARS-D3.jpg" alt="MARS Conceptual Model" width="auto" style="box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); margin-top: 10px;">
 
 <p align="center">
@@ -26,6 +30,7 @@
 - **Text-to-Speech (TTS)**: Converts written text into natural-sounding speech.
 - **Speech-to-Text (STT)**: Accurately transforms spoken language into text.
 - **Large Language Model (LLM)**: Provides sophisticated language understanding and generation capabilities.
+
 
 ---
 

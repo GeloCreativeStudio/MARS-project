@@ -18,6 +18,8 @@ from flask_caching import Cache
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_cors import CORS
 from supabase import create_client, Client
+import time
+import tempfile
 
 # Load environment variables and configure logging
 load_dotenv()
@@ -29,21 +31,18 @@ logger.add("logs/app.log", level="DEBUG" if os.environ.get("FLASK_ENV") == "deve
 LLM_API_KEY = os.getenv("LLM_API_KEY")
 KNOWLEDGE_BASE_DIR = os.getenv("KNOWLEDGE_BASE_DIR", "knowledge_base")
 SUPABASE_URL = os.getenv("SUPABASE_URL")
-SUPABASE_KEY = os.getenv("SUPABASE_ANON_KEY")  # Updated this line
+SUPABASE_KEY = os.getenv("SUPABASE_SERVICE_ROLE_KEY")
 UPLOADS_BUCKET = "uploads"
 OUTPUTS_BUCKET = "outputs"
-
-# After loading environment variables
-if not SUPABASE_URL or not SUPABASE_KEY:
-    logger.error("SUPABASE_URL or SUPABASE_ANON_KEY is missing from environment variables")
-    raise EnvironmentError("Supabase configuration is incomplete")
 
 # Initialize Supabase client
 try:
     supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
-    logger.info("Supabase client initialized successfully")
+    # Test the connection using the new alpha_users table
+    response = supabase.table('alpha_users').select('*').limit(1).execute()
+    logger.info("Supabase client initialized and tested successfully")
 except Exception as e:
-    logger.error(f"Failed to initialize Supabase client: {str(e)}")
+    logger.error(f"Failed to initialize or test Supabase client: {str(e)}")
     raise
 
 # Initialize Flask app and OpenAI client
@@ -93,21 +92,31 @@ except Exception as e:
 @cache.memoize(timeout=300)
 def speech_to_text_conversion(file_url: str) -> str:
     try:
+        # Ensure we're using the correct URL
+        logger.debug(f"Attempting to download file from URL: {file_url}")
+        
         # Download the file from Supabase
         response = requests.get(file_url)
         response.raise_for_status()
         
-        # Create a temporary file
-        temp_file = f"/tmp/{uuid.uuid4()}.wav"
-        with open(temp_file, "wb") as f:
-            f.write(response.content)
+        # Log the response status and content type
+        logger.debug(f"Download response status: {response.status_code}")
+        logger.debug(f"Download response content type: {response.headers.get('Content-Type')}")
+        
+        # Create a temporary file using tempfile module
+        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
+            temp_file.write(response.content)
+            temp_file_path = temp_file.name
+        
+        # Log the size of the downloaded file
+        logger.debug(f"Downloaded file size: {os.path.getsize(temp_file_path)} bytes")
         
         # Transcribe the audio
-        with open(temp_file, "rb") as audio_file:
+        with open(temp_file_path, "rb") as audio_file:
             transcript = client.audio.transcriptions.create(model="whisper-1", file=audio_file)
         
         # Remove the temporary file
-        os.remove(temp_file)
+        os.unlink(temp_file_path)
         
         return transcript.text
     except Exception as e:
@@ -166,24 +175,42 @@ def audio_transcription():
         if not file:
             return jsonify({"error": "No file provided"}), 400
 
-        # Generate a unique filename
         filename = f"{uuid.uuid4()}.wav"
         
-        # Upload to Supabase
-        _, error = supabase.storage.from_(UPLOADS_BUCKET).upload(filename, file.read())
-        if error:
-            raise Exception(f"Error uploading to Supabase: {error}")
+        try:
+            ensure_buckets_exist()
+            file_content = file.read()
+            
+            if len(file_content) == 0:
+                return jsonify({"error": "Empty file content"}), 400
+            
+            # Perform the upload
+            logger.debug(f"Attempting to upload file: {filename}")
+            logger.debug(f"File content length: {len(file_content)}")
+            upload_result = supabase.storage.from_(UPLOADS_BUCKET).upload(filename, file_content)
+            logger.debug(f"Upload result: {upload_result}")
+            
+            if upload_result:
+                file_path = filename  # Use the filename directly
+                file_url = supabase.storage.from_(UPLOADS_BUCKET).get_public_url(file_path)
+                logger.info(f"File uploaded successfully. Public URL: {file_url}")
+            else:
+                raise ValueError("Upload failed")
+            
+            # Add a delay to ensure the file is available
+            time.sleep(2)
+            
+            transcription = speech_to_text_conversion(file_url)
+            logger.info(f"Transcribed audio: {transcription[:50]}...")
+            return jsonify({"text": transcription})
         
-        # Get public URL
-        file_url = supabase.storage.from_(UPLOADS_BUCKET).get_public_url(filename)
-        
-        logger.info(f"Uploaded audio file: {file_url}")
-        transcription = speech_to_text_conversion(file_url)
-        logger.info(f"Transcribed audio: {transcription[:50]}...")
-        return jsonify({"text": transcription})
+        except Exception as upload_error:
+            logger.error(f"Supabase upload or transcription error: {str(upload_error)}")
+            return jsonify({"error": f"Failed to upload or process file: {str(upload_error)}"}), 500
+    
     except Exception as e:
-        logger.error(f"Error in audio_transcription: {str(e)}")
-        return jsonify({"error": str(e)}), 500
+        logger.error(f"Unexpected error in audio_transcription: {str(e)}")
+        return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
 
 @app.route("/initiate_query", methods=["POST"])
 def initiate_query():
@@ -196,18 +223,19 @@ def initiate_query():
         response = construct_response(conversation)
         logger.info(f"Generated response: {response[:50]}...")
         
-        # Generate audio
         audio_content = synthesize_audio_output(response)
         
-        # Generate a unique filename
         filename = f"{uuid.uuid4()}.mp3"
         
-        # Upload to Supabase
-        _, error = supabase.storage.from_(OUTPUTS_BUCKET).upload(filename, audio_content)
-        if error:
-            raise Exception(f"Error uploading to Supabase: {error}")
+        try:
+            ensure_buckets_exist()
+            result = supabase.storage.from_(OUTPUTS_BUCKET).upload(filename, audio_content)
+            if not result:
+                raise Exception("Failed to upload audio response to Supabase")
+        except Exception as upload_error:
+            logger.error(f"Supabase upload error: {str(upload_error)}")
+            return jsonify({"error": "Failed to upload audio response"}), 500
         
-        # Get public URL
         audio_url = supabase.storage.from_(OUTPUTS_BUCKET).get_public_url(filename)
         
         logger.info(f"Uploaded audio response: {audio_url}")
@@ -227,3 +255,41 @@ def serve_shader(filename):
 @app.route('/assets/<path:filename>')
 def serve_assets(filename):
     return send_from_directory('web/assets', filename)
+
+# After initializing Supabase client
+def ensure_buckets_exist():
+    buckets = [UPLOADS_BUCKET, OUTPUTS_BUCKET]
+    for bucket in buckets:
+        try:
+            supabase.storage.get_bucket(bucket)
+            logger.info(f"Bucket exists: {bucket}")
+        except Exception as e:
+            if "Bucket not found" in str(e):
+                try:
+                    supabase.storage.create_bucket(bucket, public=True)
+                    logger.info(f"Created bucket: {bucket}")
+                except Exception as create_error:
+                    logger.error(f"Error creating bucket {bucket}: {str(create_error)}")
+                    raise
+            else:
+                logger.error(f"Error checking bucket {bucket}: {str(e)}")
+                raise
+
+# Call this function after initializing Supabase client
+ensure_buckets_exist()
+
+def test_supabase_connection():
+    try:
+        # Try to list buckets
+        buckets = supabase.storage.list_buckets()
+        logger.info(f"Successfully listed buckets: {buckets}")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to connect to Supabase: {str(e)}")
+        return False
+
+# Call this after initializing the Supabase client
+if test_supabase_connection():
+    logger.info("Supabase connection test passed")
+else:
+    logger.error("Supabase connection test failed")

@@ -262,9 +262,18 @@ img {
 }
 
 .home__title {
-  font-size: var(--h1-font-size);
+  font-size: 5rem;
   margin-bottom: 1.5rem;
+  color: var(--first-color);
 }
+
+/* .orb {
+  content: "●";
+  font-family: "Söhne Circle", system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell, "Noto Sans", sans-serif;
+  font-size: 6rem;
+  color: var(--first-color);
+  margin-right: 0px;
+} */
 
 .home__subtitle {
   font-size: var(--h3-font-size);
@@ -441,7 +450,7 @@ img {
   align-items: center;
   justify-content: center;
   justify-self: center;
-  margin-bottom: 5rem;
+  margin-bottom: 2.5rem;
   margin-top: 3rem;
   mix-blend-mode: screen;
 }
@@ -482,7 +491,6 @@ canvas {
   min-width: 70%;
   resize: none;
   margin: auto;
-  margin-top: -2rem;
   font-family: var(--body-font);
 }
 
@@ -507,7 +515,7 @@ canvas {
   display: inline-block;
   background-color: var(--first-color);
   color: var(--body-color);
-  padding: 1rem 2rem;
+  padding: 1rem 1rem;
   border-radius: 2rem;
   font-size: var(--normal-font-size);
   transition: color .3s; /* Transition for text color change */
@@ -673,18 +681,29 @@ canvas {
 
 .researcher__data{
   display: grid;
-  grid-template-columns: repeat(2, max-content);
+  grid-template-columns: repeat(1, max-content);
   gap: .5rem 1.25rem;
   margin-bottom: 2rem;
 }
 
-.researcher__data-group{
+.researcher__data-group {
   display: inline-flex;
   align-items: center;
-  column-gap: .5rem;
+  column-gap: 0.5rem;
   font-size: var(--small-font-size);
   color: var(--white-color);
 }
+
+.researcher__data-group img {
+  width: 1rem; /* Adjust the icon size if necessary */
+  height: 1rem; /* Adjust the icon size if necessary */
+}
+
+.researcher__data-item {
+  display: flex;
+  align-items: center;
+}
+
 
 .researcher__data i{
   font-size: 1rem;
@@ -1057,5 +1076,26 @@ canvas {
 
   .scrollup {
     right: 3rem;
+  }
+}
+
+/* Media Queries for responsiveness */
+@media (max-width: 480px) {
+  .home__title {
+    font-size: 3rem; /* Adjusted font size for smaller screens */
+  }
+
+  .home__subtitle {
+    font-size: var(--h4-font-size); /* Adjusted font size for smaller screens */
+  }
+
+  .home__ai {
+    flex-direction: column;
+    row-gap: 1rem; /* Adjusted gap for smaller screens */
+    column-gap: 0; /* Removed column gap for smaller screens */
+  }
+
+  .home__ai > * {
+    flex: none; /* Removed flex property for smaller screens */
   }
 }

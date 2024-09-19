@@ -38,10 +38,27 @@ navLink.forEach(n => n.addEventListener('click', linkAction))
 // }
 // window.addEventListener('scroll', scrollHeader)
 
-const scrollHeader = () => {
-    const header = document.getElementById('header')
-    header.classList.add('scroll-header')
+// Optimize scroll events
+function debounce(func, wait = 20, immediate = true) {
+  let timeout;
+  return function() {
+    const context = this, args = arguments;
+    const later = function() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+    const callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
 }
+
+// Optimize scroll events
+const scrollHeader = debounce(() => {
+  const header = document.getElementById('header');
+  header.classList.add('scroll-header');
+});
 
 // Call the function immediately to add the class on page load
 scrollHeader();
@@ -81,7 +98,7 @@ function scrollUp(){
 	this.scrollY >= 350 ? scrollUp.classList.add('show-scroll')
 						: scrollUp.classList.remove('show-scroll')
 }
-window.addEventListener('scroll', scrollUp)
+window.addEventListener('scroll', scrollUp, { passive: true })
 
 /*=============== SCROLL SECTIONS ACTIVE LINK ===============*/
 const sections = document.querySelectorAll('section[id]')
@@ -102,16 +119,20 @@ const scrollActive = () =>{
 		}                                                    
 	})
 }
-window.addEventListener('scroll', scrollActive)
+window.addEventListener('scroll', scrollActive, { passive: true })
 
 /*=============== SCROLL REVEAL ANIMATION ===============*/
+// Optimize scroll reveal
 const sr = ScrollReveal({
-    origin: 'top',
-    distance: '60px',
-    duration: 2500,
-    delay: 400,
-    // reset: true,
-})
+  origin: 'top',
+  distance: '60px',
+  duration: 2500,
+  delay: 400,
+  useDelay: 'onload',
+  reset: false,
+  mobile: true,
+  viewFactor: 0.2
+});
 
 // sr.reveal('.home__title, .researcher__container, .section__title')
 // sr.reveal('.home__subtitle', {delay: 500})

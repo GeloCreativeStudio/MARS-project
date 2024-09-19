@@ -4,57 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MARS is a Multifunctional AI-Responsive System.">
+    <meta name="keywords" content="MARS, AI, Artificial Intelligence, Responsive System">
+    <meta name="author" content="Angelo Manalo">
 
-    <!--=============== FAVICON ===============-->
-    <link rel="shortcut icon" href="./assets/img/favicon-32x32.png" type="image/x-icon">
+    <!-- Preload critical assets -->
+    <link rel="preload" href="/assets/css/styles.min.css" as="style">
+    <link rel="preload" href="/assets/js/main.min.js" as="script">
+    <link rel="preload" href="/assets/js/script.min.js" as="script">
 
-    <!--=============== REMIX ICONS ===============-->
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+    <!-- FAVICON -->
+    <link rel="shortcut icon" href="assets/img/favicon/favicon.ico" type="image/x-icon">
 
-    <!--=============== SWIPER CSS ===============-->
-    <link rel="stylesheet" href="./assets/css/swiper-bundle.min.css">
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="/assets/css/styles.min.css">
 
-    <!--=============== CSS ===============-->
-    <link rel="stylesheet" href="./assets/css/styles.css">
-
-    <!-- p5.js -->
-    <script src="libraries/p5.min.js"></script>
-    <script src="libraries/p5.sound.min.js"></script>
-
-    <title>Multifunctional AI-Responsive System - EECP</title>
-
+    <!-- Defer non-critical scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js" defer></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" defer></script>
     <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js" defer></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
 </head>
 
 <body>
-    <!--==================== HEADER ====================-->
+    <!-- Header -->
     <header class="header" id="header">
         <nav class="nav container">
             <a href="#" class="nav__logo">
-                <i class="ri-circle-fill"></i>
-                MARS
+                <i class="ri-circle-fill"></i> MARS
             </a>
         </nav>
-
     </header>
 
-    <!--==================== MAIN ====================-->
+    <!-- Main Content -->
     <main class="main">
-        <!--==================== HOME ====================-->
+        <!-- Home Section -->
         <section class="home section" id="home">
             <div class="shape shape__big"></div>
             <div class="shape shape__small"></div>
             <div class="home__container container grid">
                 <div class="home__data">
-
-                    <h2 class="home__subtitle">
-                        Multifunctional AI-Responsive System
-                    </h2>
-
+                    <h2 class="home__subtitle">Multifunctional AI-Responsive System</h2>
                     <h3 class="home__mars">
-                        <i class="ri-voiceprint-line"></i>The first AI Voice Chatbot by EECPian
+                        <i class="ri-circle-line"></i>The future is here
                     </h3>
                 </div>
 
@@ -62,12 +58,9 @@
 
                 <div class="message__container">
                     <textarea id="transcription-box" class="" placeholder="Your query goes here..." disabled></textarea>
-
                     <p class="message-description">
-                        <i class="ri-mic-line"></i> to start talking, <i class="ri-mic-off-line"></i> to send your
-                        query.
+                        <i class="ri-mic-line"></i> to start talking, <i class="ri-mic-off-line"></i> to send your query.
                     </p>
-
                 </div>
 
                 <a type="button" class="home__button" id="record-button">
@@ -76,39 +69,31 @@
 
                 <button type="button" style="display: none;" id="ask-button"></button>
 
-                <p class="home__button-description">
-                    TALK TO MARS
-                </p>
+                <p class="home__button-description">TALK TO MARS</p>
 
                 <!-- Audio Player -->
                 <div class="audio-player">
                     <audio id="audio-element"></audio>
                 </div>
-
-
             </div>
         </section>
 
-        <!--==================== RESPONSE ====================-->
+        <!-- Response Section -->
         <section class="section" id="response">
             <div class="response">
-
                 <div class="about__data">
                     <h2 class="section__title response__title">
                         <i class="ri-message-3-line"></i> MARS Response:
                     </h2>
-
                     <p class="response__description">
                         Sometimes MARS might mishear you, so please double-check his responses.
-                        <!-- <br>If something doesn't make sense, it's likely because he misheard you. -->
                     </p>
-
                     <p class="response__main" id="response-text"></p>
                 </div>
             </div>
         </section>
 
-        <!--==================== FOOTER ====================-->
+        <!-- Footer -->
         <footer class="footer section">
             <div class="shape shape__big"></div>
             <div class="shape shape__small"></div>
@@ -116,8 +101,7 @@
             <div class="footer__container container grid">
                 <div class="footer__content">
                     <a href="#" class="footer__logo">
-                        <i class="ri-circle-fill"></i>
-                        MARS
+                        <i class="ri-circle-fill"></i> MARS
                     </a>
                     <p class="footer__description">
                         MARS is currently in its initial version. Expect more exciting features coming soon.
@@ -128,78 +112,85 @@
                 </div>
 
                 <div class="footer__content">
-                    <h3 class="footer__title">
-                        Research & Development
-                    </h3>
+                    <h3 class="footer__title">Research & Development</h3>
                     <ul class="footer__links">
-                        <li>
-                            <a href="https://www.facebook.com/janine.lozano.35" class="footer__link">Alysa Janine Linga</a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/althea.baliwas" class="footer__link">Althea Baliwas</a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/mejico.aram" class="footer__link">Aram Neftali Mejico</a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/alm1017" class="footer__link">Angelo Manalo</a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/profile.php?id=100093702846439" class="footer__link">Billy Yndrew Justiniano</a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/kathrynleigh.guavesii" class="footer__link">Kathryn Leigh Guavez</a>
-                        </li>
+                        <li><a href="https://www.facebook.com/janine.lozano.35" class="footer__link">Alysa Janine Linga</a></li>
+                        <li><a href="https://www.facebook.com/althea.baliwas" class="footer__link">Althea Baliwas</a></li>
+                        <li><a href="https://www.facebook.com/mejico.aram" class="footer__link">Aram Neftali Mejico</a></li>
+                        <li><a href="https://www.facebook.com/alm1017" class="footer__link">Angelo Manalo</a></li>
+                        <li><a href="https://www.facebook.com/profile.php?id=100093702846439" class="footer__link">Billy Yndrew Justiniano</a></li>
+                        <li><a href="https://www.facebook.com/kathrynleigh.guavesii" class="footer__link">Kathryn Leigh Guaves</a></li>
                     </ul>
                 </div>
 
                 <div class="footer__content">
-                    <h3 class="footer__title">
-                        BSCS Instructors
-                    </h3>
+                    <h3 class="footer__title">BSCS Instructors</h3>
                     <ul class="footer__links">
-                        <li>
-                            <a href="https://www.facebook.com/hartzell.majaba.5" class="footer__link">Hartzell Majaba</a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/jnpdrck" class="footer__link">John Pedrick Hilot</a>
-                        </li>
-                        <li>
-                            <a href="https://www.facebook.com/johnmark.galang.7" class="footer__link">Mark Galang</a>
-                        </li>
+                        <li><a href="https://www.facebook.com/hartzell.majaba.5" class="footer__link">Hartzell Majaba</a></li>
+                        <li><a href="https://www.facebook.com/jnpdrck" class="footer__link">John Pedrick Hilot</a></li>
+                        <li><a href="https://www.facebook.com/johnmark.galang.7" class="footer__link">Mark Galang</a></li>
                     </ul>
                 </div>
-
             </div>
-            <span class="footer__copy">
-                &copy; 2024 MARS. All rights reserved.
-            </span>
+            <span class="footer__copy">&copy; 2024 MARS. All rights reserved.</span>
         </footer>
 
-
-        <!--========== SCROLL UP ==========-->
+        <!-- Scroll Up -->
         <a href="#" class="scrollup" id="scroll-up">
             <i class="ri-arrow-up-s-line scrollup__icon"></i>
         </a>
 
-        <!--=============== SCROLL REVEAL ===============-->
-        <script src="./assets/js/scrollreveal.min.js"></script>
+        <!-- Load p5.js sketch dynamically -->
+        <canvas id="audio-visualizer" width="800" height="200"></canvas>
 
-        <!--=============== SWIPER JS ===============-->
-        <script src="./assets/js/swiper-bundle.min.js"></script>
+        <!-- Scripts -->
+        <script src="/assets/js/scrollreveal.min.js" defer></script>
+        <script src="/assets/js/swiper-bundle.min.js" defer></script>
+        <script src="/assets/js/mixitup.min.js" defer></script>
+        <script src="/assets/js/main.min.js" defer></script>
+        <script src="/assets/js/script.min.js" defer></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const analyser = audioContext.createAnalyser();
+                const canvas = document.getElementById('audio-visualizer');
+                const ctx = canvas.getContext('2d');
+                
+                analyser.fftSize = 256;
+                const bufferLength = analyser.frequencyBinCount;
+                const dataArray = new Uint8Array(bufferLength);
 
-        <!--=============== MIXITUP JS ===============-->
-        <script src="./assets/js/mixitup.min.js"></script>
+                function drawVisualizer() {
+                    requestAnimationFrame(drawVisualizer);
 
-        <!--=============== MAIN JS ===============-->
-        <script src="./assets/js/main.js"></script>
+                    analyser.getByteFrequencyData(dataArray);
 
+                    ctx.fillStyle = 'rgb(0, 0, 0)';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        <script src="script.js" defer></script>
+                    const barWidth = (canvas.width / bufferLength) * 2.5;
+                    let x = 0;
 
-        <!--=============== P5 ===============-->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/simplex-noise/2.4.0/simplex-noise.min.js"></script>
+                    for (let i = 0; i < bufferLength; i++) {
+                        const barHeight = dataArray[i] / 2;
 
+                        ctx.fillStyle = `rgb(${barHeight + 100}, 50, 50)`;
+                        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+
+                        x += barWidth + 1;
+                    }
+                }
+
+                // Connect the audio element to the analyser
+                const audioElement = document.getElementById('audio-element');
+                const source = audioContext.createMediaElementSource(audioElement);
+                source.connect(analyser);
+                analyser.connect(audioContext.destination);
+
+                drawVisualizer();
+            });
+        </script>
+    </main>
 </body>
 
 </html>

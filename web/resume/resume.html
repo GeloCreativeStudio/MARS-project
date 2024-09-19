@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='rgba(255,255,255,1)'%3E%3Cpath d='M21.0082 3C21.556 3 22 3.44495 22 3.9934V20.0066C22 20.5552 21.5447 21 21.0082 21H2.9918C2.44405 21 2 20.5551 2 20.0066V3.9934C2 3.44476 2.45531 3 2.9918 3H21.0082ZM20 5H4V19H20V5ZM18 15V17H6V15H18ZM12 7V13H6V7H12ZM18 11V13H14V11H18ZM10 9H8V11H10V9ZM18 7V9H14V7H18Z'%3E%3C/path%3E%3C/svg%3E" type="image/svg+xml">
+    <title>Angelo Manalo</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #000000;
+            --secondary-color: #333;
+            --accent-color: #555;
+            --body-bg-color: #f4f4f9;
+            --text-color: #333;
+            --header-bg-gradient: linear-gradient(to right, var(--secondary-color), var(--accent-color));
+            --box-shadow-light: rgba(0, 0, 0, 0.1);
+            --box-shadow-dark: rgba(0, 0, 0, 0.2);
+            --font-size-normal: 16px;
+        }
+
+        body {
+            font-family: 'Roboto Mono', monospace;
+            margin: 0;
+            padding: 0;
+            background-color: var(--body-bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        ::selection {
+            background-color: var(--text-color);
+            color: var(--body-bg-color);
+        }
+
+        .name-container {
+            text-align: center;
+            margin: 2rem;
+            margin-bottom: -2rem;
+        }
+
+        .name-title {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .name-subtitle {
+            font-size: 1.2rem;
+            color: var(--accent-color);
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            background: var(--header-bg-gradient);
+            padding: 0.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px var(--box-shadow-light);
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .section {
+            padding: 2rem;
+            background: #fff;
+            margin: 2rem 0;
+            box-shadow: 0 4px 8px var(--box-shadow-light);
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px var(--box-shadow-light);
+        }
+
+        .section h2 {
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .resume-section ul,
+        .contact-section ul,
+        .projects-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .resume-section ul li,
+        .contact-section ul li,
+        .projects-section ul li {
+            margin-bottom: 10px;
+            line-height: 1.8;
+        }
+
+        .resume-section ul ul,
+        .projects-section ul ul {
+            list-style: disc;
+            margin-left: 20px;
+        }
+
+        .resume-section ul ul li,
+        .projects-section ul ul li {
+            margin-bottom: 5px;
+        }
+
+        .projects-section .project-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .projects-section .project-images img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, box-shadow 0.3s ease-in-out;
+            box-shadow: 0 4px 8px var(--box-shadow-light);
+        }
+
+        .projects-section .project-images img:hover {
+            box-shadow: 0 8px 16px var(--box-shadow-dark);
+        }
+
+        .projects-section .project-images img.loaded {
+            opacity: 1;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 100px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            animation: zoom 0.6s;
+        }
+
+        @keyframes zoom {
+            from {
+                transform: scale(0);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: var(--secondary-color);
+            color: #fff;
+            text-align: center;
+            padding: 1rem 0;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            font-size: 0.8rem;
+        }
+
+        .contact-section ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-section ul li a:hover {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .fade-in {
+            animation: fadeIn 2s;
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .projects-section img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-form label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-family: 'Roboto Mono', monospace;
+        }
+
+        .contact-form button {
+            padding: 10px;
+            background-color: var(--secondary-color);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .contact-form button:hover {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+        }
+
+        .button {
+            display: inline-block;
+            background-color: #fff;
+            color: var(--text-color);
+            padding: 1rem 2rem;
+            border-radius: 2rem;
+            font-size: var(--font-size-normal);
+            transition: color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 8px var(--box-shadow-light);
+            text-decoration: none;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            width: 50%;
+            max-width: 50%;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .button:hover {
+            background-color: var(--secondary-color);
+            color: #fff;
+            box-shadow: 0 8px 16px var(--box-shadow-dark);
+        }
+
+        .no-click {
+            pointer-events: none;
+        }
+
+        /*=============== SCROLL UP ===============*/
+        .scrollup {
+            position: fixed;
+            right: 1rem;
+            bottom: -30%;
+            background-color: hsla(0, 0%, 35%, 0.418);
+            backdrop-filter: blur(16px);
+            display: inline-flex;
+            padding: .45rem;
+            border-radius: .5rem;
+            font-size: 1.15rem;
+            color: var(--white-color);
+            z-index: var(--z-tooltip);
+            transition: .4s;
+            text-decoration: none;
+            /* Ensure no underline */
+        }
+
+        .scrollup:hover {
+            background-color: hsla(0, 0%, 0%, 0.2);
+            transform: translateY(-.25rem);
+        }
+
+        /* Remove underline from scroll-up icon */
+        .scrollup__icon {
+            text-decoration: none;
+            /* Ensure no underline */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            width: 100%;
+            height: 100%;
+            color: var(--body-bg-color);
+        }
+
+        /* Show Scroll Up */
+        .show-scroll {
+            bottom: 2rem;
+        }
+
+        @media (max-width: 430px) {
+            .projects-section .project-images {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+
+            nav ul li {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="name-container">
+        <h1 class="name-title">Angelo Manalo</h1>
+        <p class="name-subtitle">Graphic Designer | Developer</p>
+    </div>
+    <!-- <nav>
+        <ul>
+            <li><a href="#intro">About Me</a></li>
+            <li><a href="#resume">Resume</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav> -->
+    <div class="container fade-in">
+        <!-- About Me Section -->
+        <section id="intro" class="section intro-section">
+            <h2>About Me</h2>
+            <p>
+                Hello! I'm Angelo Manalo, a very motivated and devoted student with a taste for Graphic Design, Coding,
+                Cybersecurity, and the very exciting world of Artificial Intelligence while pursuing my degree in
+                BSCS-AI at Far Eastern University Institute of Technology. I am the founder of Gelo Creative Studio, a
+                design and innovation studio dedicated to creating inspiring visuals with the use of modern AI tools
+                that transform your creative vision into design solutions with maximum impact. Welcome to my personal
+                webpage, where you can get to learn more about the skills, experiences, and projects I engage in.
+            </p>
+        </section>
+
+        <!-- Resume Section -->
+        <section id="resume" class="section resume-section">
+            <h2>Resume</h2>
+            <h3>Education</h3>
+            <ul>
+                <li><strong>Far Eastern University Institute of Technology</strong> - Bachelor of Science in Computer
+                    Science with Specialization in Artificial Intelligence (Currently pursuing)</li>
+                <li><strong>EMA EMITS College Philippines</strong> - Transferred from Bachelor of Science in Computer
+                    Science program</li>
+                <li><strong>HarvardX - Online Course</strong> - CS50's Introduction to Programming with Python
+                    (Currently pursuing)</li>
+                <li><strong>Udemy - Online Course</strong> - Logo Design Mastery in Illustrator (Completed in 2022)</li>
+                <li><strong>Senior High School</strong> - Completed in 2021</li>
+                <li><strong>Junior High School</strong> - Completed in 2019</li>
+                <li><strong>Elementary</strong> - Completed in 2014</li>
+            </ul>
+
+            <h3>Experience</h3>
+            <ul>
+                <li><strong>Freelance Artist at GCS</strong> (2021 - Present)
+                    <ul>
+                        <li>Design logos and artworks using numerous software.</li>
+                        <li>Research and understand the need and preference of the clients.</li>
+                        <li>Work with the client to match the expectation for the design and development of the clients.
+                        </li>
+                        <li>Work individually and with a team to complete the job within the time limit.</li>
+                        <li>Keep up with the latest trends in design.</li>
+                        <li>Suggest improvements in the design as per the received feedback from the client.</li>
+                    </ul>
+                </li>
+                <li><strong>Freelance Developer</strong> (2021 - Present)
+                    <ul>
+                        <li>Craft maintainable code using HTML, CSS, VB.net, PHP, and Python.</li>
+                        <li>Conduct security assessments and recommend strategic enhancements.</li>
+                        <li>Utilize tools and methodologies to manage code and track issues.</li>
+                        <li>Engage in code reviews and continuously learn to improve development.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Top Skills</h3>
+            <ul>
+                <li>Mastery of design tools, such as Photoshop, Illustrator, Premiere Pro, and others.</li>
+                <li>Skilled in modern tools of artificial intelligence.</li>
+                <li>Working with multiple programming languages, in particular, Python.</li>
+                <li>A skilled Unix, Linux, and Windows operator.</li>
+            </ul>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="section projects-section">
+            <h2>Projects</h2>
+            <ul>
+                <li>
+                    <h3>Multifunctional AI Responsive System</h3>
+                    <div class="project-images">
+                        <img src="./images/MARS/mars-min.jpg" data-src="./images/MARS/mars.jpg"
+                            alt="Multifunctional AI Responsive System" class="loading" loading="lazy"
+                            onload="imageLoaded(this)" onclick="openModal(this)">
+                    </div>
+                    <p>A <strong>pioneer</strong> of AI research represents the forefront of AI innovation in Oriental
+                        Mindoro, Philippines. Developed by researchers at <strong>EMA EMITS College Philippines</strong>
+                        that can understand, think, and speak in a similar way like a real person.</p>
+                </li>
+                <li>
+                    <h3>QR-Based Jail Visitor Management System</h3>
+                    <div class="project-images">
+                        <img src="./images/JVMS/jvms-min.jpg" data-src="./images/JVMS/jvms.jpg"
+                            alt="QR-Based Jail Visitor Management System" class="loading" loading="lazy"
+                            onload="imageLoaded(this)" onclick="openModal(this)">
+                    </div>
+                    <p>The <strong>QR-Based Jail Visitor Management System (JVMS)</strong> is developed for the
+                        provision and enhancement of visitation management at <strong>Bansud District Jail, BJMP in
+                            MIMAROPA, Philippines</strong>. It guarantees efficiency and security between the
+                        operational staff and the visitors in a visitation process. Provides a structured way to
+                        effectively and securely manage the information of visitors and monitor visitation activities.
+                    </p>
+                </li>
+                <li>
+                    <h3>MLBB Genworth Tournament</h3>
+                    <div class="project-images">
+                        <img src="./images/GENTOUR/min/banner-min.jpg" data-src="./images/GENTOUR/banner.jpg"
+                            alt="MLBB Genworth Tournament" class="loading" loading="lazy" onload="imageLoaded(this)"
+                            onclick="openModal(this)">
+                    </div>
+                    <p>A bold and swaggering design of Esport banner for the <strong>Mobile Legends: Bang Bang
+                            Genworth Tournament</strong>. The banner design put the company in the energy and thrill of
+                        the esport boosting employees' morale.</p>
+                </li>
+                <li>
+                    <h3>MHO Uniform</h3>
+                    <div class="project-images">
+                        <img src="./images/MHO/min/MHO-blue-min.webp" data-src="./images/MHO/MHO-blue.webp"
+                            alt="MHO Uniform" class="loading" loading="lazy" onload="imageLoaded(this)"
+                            onclick="openModal(this)">
+                        <img src="./images/MHO/min/MHO-green-min.webp" data-src="./images/MHO/MHO-green.webp"
+                            alt="MHO Uniform" class="loading" loading="lazy" onload="imageLoaded(this)"
+                            onclick="openModal(this)">
+                        <img src="./images/MHO/min/MHO-red-min.webp" data-src="./images/MHO/MHO-red.webp"
+                            alt="MHO Uniform" class="loading" loading="lazy" onload="imageLoaded(this)"
+                            onclick="openModal(this)">
+                        <img src="./images/MHO/min/MHO-white-min.webp" data-src="./images/MHO/MHO-white.webp"
+                            alt="MHO Uniform" class="loading" loading="lazy" onload="imageLoaded(this)"
+                            onclick="openModal(this)">
+                    </div>
+                    <p>Minimalist yet clean staff uniform design for <strong>Pinamalayan Municipal Health
+                            Office</strong>, reflecting the essence of work and ethics. The functions of the uniforms
+                        are to keep the staff looking neat and organized over their working days.</p>
+                </li>
+                <li>
+                    <h3>Tatung Kalye</h3>
+                    <div class="project-images">
+                        <img src="./images/TK/min/tatung-kalye-min.webp" data-src="./images/TK/tatung-kalye.webp"
+                            alt="Tatung Kalye" class="loading" loading="lazy" onload="imageLoaded(this)"
+                            onclick="openModal(this)">
+                        <img src="./images/TK/min/TK-D1-min.webp" data-src="./images/TK/TK-D1.webp" alt="Tatung Kalye"
+                            class="loading" loading="lazy" onload="imageLoaded(this)" onclick="openModal(this)">
+                    </div>
+                    <p>Skull mascot design for the brand and the clothing line of Tatung Kalye. I did this project in
+                        Illustrator and Photoshop. With this design, Tatung Kalye gained <strong>197k</strong> followers
+                        from <strong>190k</strong> in just one day.</p>
+                </li>
+                <li>
+                    <h3>PHONEUDEN</h3>
+                    <div class="project-images">
+                        <img src="./images/PND/min/pnd-min.webp" data-src="./images/PND/pnd.webp" alt="PHONEUDEN"
+                            class="loading" loading="lazy" onload="imageLoaded(this)" onclick="openModal(this)">
+                    </div>
+                    <p>The logo for the thesis projects of Batangas State University students under the Bachelor of
+                        Science in Petroleum Engineering. Top place in the <strong>INTERNAL STUDENT CHAPTER PAPER
+                            CONTEST 2024 (ISCPC-24).</strong></p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section contact-section">
+            <h2>Contact</h2>
+            <ul>
+                <li>Email: <a href="mailto:manaloangelo1017@gmail.com">manaloangelo1017@gmail.com</a></li>
+                <li>Phone: <a href="tel:+639925528110">+63 992 552 8110</a></li>
+                <li>Address: Quinabigan, Pinamalayan, Oriental Mindoro 5208</li>
+            </ul>
+        </section>
+
+        <!-- Back Button -->
+        <a href="/" class="button button-container">Back</a>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Gelo Creative Studio. All rights reserved.</p>
+    </footer>
+
+    <!-- Scroll-to-Top Button -->
+    <a href="#" class="scrollup" id="scroll-up">
+        <i class="ri-arrow-up-s-line scrollup__icon"></i>
+    </a>
+
+    <!-- Modal Script -->
+    <script defer>
+        function imageLoaded(imgElement) {
+            imgElement.classList.remove('loading');
+            imgElement.classList.add('loaded');
+        }
+
+        function openModal(imgElement) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("img01");
+            var highResSrc = imgElement.getAttribute('data-src');
+            modal.style.display = "block";
+            modalImg.src = highResSrc;
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            var modal = document.getElementById("myModal");
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+
+    <!-- Modal Structure -->
+    <div id="myModal" class="modal" onclick="closeModal()">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+
+    <script>
+        // Show scroll-up
+        function scrollUp() {
+            const scrollUp = document.getElementById('scroll-up');
+            // When the scroll is higher than 350 viewport height, add the show-scroll class to the a tag with the scrollup class
+            window.scrollY >= 350 ? scrollUp.classList.add('show-scroll')
+                : scrollUp.classList.remove('show-scroll');
+        }
+        window.addEventListener('scroll', scrollUp);
+
+        // Scroll to top function
+        document.getElementById('scroll-up').addEventListener('click', function (event) {
+            event.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+</body>
+
+</html>

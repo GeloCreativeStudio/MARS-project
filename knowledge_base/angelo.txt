@@ -1,0 +1,71 @@
+**Angelo Manalo**  
+*Graphic Designer | Developer | AI Researcher*
+
+---
+
+### About Me:
+Hello! I'm Angelo Manalo, a passionate and driven student currently pursuing a Bachelor of Science in Computer Science with a specialization in Artificial Intelligence at Far Eastern University Institute of Technology. I have a strong interest in Graphic Design, Coding, Cybersecurity, and the fascinating world of Artificial Intelligence. As the founder of Gelo Creative Studio, I lead a design and innovation hub focused on crafting impactful visuals using cutting-edge AI tools. Welcome to my personal webpage, where you can explore my skills, experiences, and projects.
+
+### Education:
+- **Far Eastern University Institute of Technology**  
+  *Bachelor of Science in Computer Science with Specialization in Artificial Intelligence (Ongoing)*
+
+- **EMA EMITS College Philippines**  
+  *Transferred from Bachelor of Science in Computer Science*
+
+- **HarvardX**  
+  *CS50's Introduction to Programming with Python (Ongoing)*
+
+- **Udemy**  
+  *Logo Design Mastery in Illustrator (Completed in 2022)*
+
+- **Senior High School**  
+  *Graduated in 2021*
+
+- **Junior High School**  
+  *Graduated in 2019*
+
+- **Elementary School**  
+  *Graduated in 2014*
+
+### Experience:
+**Freelance Artist at Gelo Creative Studio**  
+*(2021 - Present)*  
+- Design logos and artworks using various software.
+- Research client needs and preferences to deliver tailored design solutions.
+- Collaborate with clients to ensure their expectations are met in both design and development.
+- Work independently or within a team to meet deadlines.
+- Stay updated with the latest design trends.
+- Implement client feedback for continuous improvement.
+
+**Freelance Developer**  
+*(2021 - Present)*  
+- Develop and maintain code using HTML, CSS, VB.net, PHP, and Python.
+- Perform security assessments and suggest enhancements.
+- Utilize tools and methodologies to manage code and track issues.
+- Engage in code reviews and ongoing learning to enhance development skills.
+
+### Top Skills:
+- Proficient in design tools like Photoshop, Illustrator, Premiere Pro, and more.
+- Skilled in utilizing modern artificial intelligence tools.
+- Experienced with multiple programming languages, particularly Python.
+- Competent in operating Unix, Linux, and Windows systems.
+
+### Projects:
+- **Multifunctional AI Responsive System**  
+  An AI research project leading the charge in AI innovation in Oriental Mindoro, Philippines, developed by researchers at EMA EMITS College Philippines. The system is capable of understanding, thinking, and communicating like a real person.
+
+- **QR-Based Jail Visitor Management System**  
+  Developed for Bansud District Jail, BJMP in MIMAROPA, Philippines, this system enhances the security and efficiency of visitation management. It provides a structured way to manage visitor information and monitor activities effectively.
+
+- **MLBB Genworth Tournament**  
+  A dynamic Esports banner design for the Mobile Legends: Bang Bang Genworth Tournament, capturing the energy and excitement of the event and boosting employee morale.
+
+- **MHO Uniform Design**  
+  A minimalist and clean staff uniform design for the Pinamalayan Municipal Health Office, reflecting professionalism and work ethics while ensuring staff present a neat and organized appearance.
+
+- **Tatung Kalye**  
+  A skull mascot design for the Tatung Kalye brand and clothing line, created using Illustrator and Photoshop. This design helped the brand gain 7,000 followers overnight.
+
+- **PHONEUDEN**  
+  A logo design for a thesis project by students at Batangas State University in Petroleum Engineering. The logo secured the top spot in the INTERNAL STUDENT CHAPTER PAPER CONTEST 2024 (ISCPC-24).

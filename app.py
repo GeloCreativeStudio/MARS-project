@@ -12,7 +12,7 @@ from marshmallow import Schema, fields, ValidationError
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain.text_splitter import CharacterTextSplitter
-from langchain_community.document_loaders import DirectoryLoader, TextLoader
+from langchain_community.document_loaders import TextLoader
 from flask_caching import Cache
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_cors import CORS

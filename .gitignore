@@ -9,16 +9,13 @@ __pycache__/
 
 # Logs
 *.log
+logs/
 
 # Environment Files
 .env
-.venv
-env/
-venv/
 
 # Uploads, outputs, and caches
 .uploads/
-.pytest_cache/
 .outputs/
 
 # Backup files

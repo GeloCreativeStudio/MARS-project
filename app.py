@@ -193,7 +193,3 @@ def serve_shader(filename):
 @app.route('/assets/<path:filename>')
 def serve_assets(filename):
     return send_from_directory('web/assets', filename)
-
-if __name__ == "__main__":
-    logger.info("Flask app started")
-    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 5000)))

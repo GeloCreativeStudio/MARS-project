@@ -3,6 +3,7 @@ import sys
 import uuid
 import openai
 import nltk
+import requests
 from typing import List, Dict
 from flask import Flask, jsonify, request, send_file, send_from_directory
 from dotenv import load_dotenv
@@ -16,6 +17,7 @@ from langchain_community.document_loaders import TextLoader
 from flask_caching import Cache
 from werkzeug.middleware.proxy_fix import ProxyFix
 from flask_cors import CORS
+from supabase import create_client, Client
 
 # Load environment variables and configure logging
 load_dotenv()
@@ -26,12 +28,23 @@ logger.add("logs/app.log", level="DEBUG" if os.environ.get("FLASK_ENV") == "deve
 # Constants
 LLM_API_KEY = os.getenv("LLM_API_KEY")
 KNOWLEDGE_BASE_DIR = os.getenv("KNOWLEDGE_BASE_DIR", "knowledge_base")
-UPLOADS_FOLDER = ".uploads"
-OUTPUTS_FOLDER = ".outputs"
+SUPABASE_URL = os.getenv("SUPABASE_URL")
+SUPABASE_KEY = os.getenv("SUPABASE_ANON_KEY")  # Updated this line
+UPLOADS_BUCKET = "uploads"
+OUTPUTS_BUCKET = "outputs"
 
-# Ensure folders exist
-os.makedirs(UPLOADS_FOLDER, exist_ok=True)
-os.makedirs(OUTPUTS_FOLDER, exist_ok=True)
+# After loading environment variables
+if not SUPABASE_URL or not SUPABASE_KEY:
+    logger.error("SUPABASE_URL or SUPABASE_ANON_KEY is missing from environment variables")
+    raise EnvironmentError("Supabase configuration is incomplete")
+
+# Initialize Supabase client
+try:
+    supabase: Client = create_client(SUPABASE_URL, SUPABASE_KEY)
+    logger.info("Supabase client initialized successfully")
+except Exception as e:
+    logger.error(f"Failed to initialize Supabase client: {str(e)}")
+    raise
 
 # Initialize Flask app and OpenAI client
 app = Flask(__name__)
@@ -78,11 +91,25 @@ except Exception as e:
 
 # Helper functions
 @cache.memoize(timeout=300)
-def speech_to_text_conversion(filename: str) -> str:
+def speech_to_text_conversion(file_url: str) -> str:
     try:
-        with open(filename, "rb") as audio_file:
+        # Download the file from Supabase
+        response = requests.get(file_url)
+        response.raise_for_status()
+        
+        # Create a temporary file
+        temp_file = f"/tmp/{uuid.uuid4()}.wav"
+        with open(temp_file, "wb") as f:
+            f.write(response.content)
+        
+        # Transcribe the audio
+        with open(temp_file, "rb") as audio_file:
             transcript = client.audio.transcriptions.create(model="whisper-1", file=audio_file)
-            return transcript.text
+        
+        # Remove the temporary file
+        os.remove(temp_file)
+        
+        return transcript.text
     except Exception as e:
         logger.error(f"Error in speech_to_text_conversion: {str(e)}")
         raise
@@ -112,12 +139,10 @@ def construct_response(conversation: List[Dict[str, str]]) -> str:
         raise
 
 @cache.memoize(timeout=300)
-def synthesize_audio_output(text: str, output_path: str = "") -> str:
+def synthesize_audio_output(text: str) -> bytes:
     try:
         response = client.audio.speech.create(model="tts-1", voice="onyx", input=text)
-        with open(output_path, "wb") as output:
-            output.write(response.content)
-        return output_path
+        return response.content
     except Exception as e:
         logger.error(f"Error in synthesize_audio_output: {str(e)}")
         raise
@@ -137,50 +162,59 @@ def front_end():
 @app.route("/audio_transcription", methods=["POST"])
 def audio_transcription():
     try:
-        schema = FileUploadSchema()
-        data = schema.load(request.files)
-        file = data["file"]
-        recording_file = f"{uuid.uuid4()}.wav"
-        recording_path = os.path.join(UPLOADS_FOLDER, recording_file)
-        file.save(recording_path)
-        logger.info(f"Saved audio file: {recording_path}")
-        transcription = speech_to_text_conversion(recording_path)
+        file = request.files['file']
+        if not file:
+            return jsonify({"error": "No file provided"}), 400
+
+        # Generate a unique filename
+        filename = f"{uuid.uuid4()}.wav"
+        
+        # Upload to Supabase
+        _, error = supabase.storage.from_(UPLOADS_BUCKET).upload(filename, file.read())
+        if error:
+            raise Exception(f"Error uploading to Supabase: {error}")
+        
+        # Get public URL
+        file_url = supabase.storage.from_(UPLOADS_BUCKET).get_public_url(filename)
+        
+        logger.info(f"Uploaded audio file: {file_url}")
+        transcription = speech_to_text_conversion(file_url)
         logger.info(f"Transcribed audio: {transcription[:50]}...")
         return jsonify({"text": transcription})
-    except ValidationError as err:
-        logger.error(f"Validation error: {err.messages}")
-        return jsonify({"error": err.messages}), 400
     except Exception as e:
         logger.error(f"Error in audio_transcription: {str(e)}")
-        return jsonify({"error": "Internal Server Error"}), 500
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/initiate_query", methods=["POST"])
 def initiate_query():
     try:
-        schema = InitiateQuerySchema()
-        data = schema.load(request.get_json(force=True))
-        conversation = data["conversation"]
+        data = request.get_json(force=True)
+        conversation = data.get("conversation")
+        if not conversation:
+            return jsonify({"error": "No conversation provided"}), 400
+
         response = construct_response(conversation)
         logger.info(f"Generated response: {response[:50]}...")
-        response_file = f"{uuid.uuid4()}.mp3"
-        response_path = os.path.join(OUTPUTS_FOLDER, response_file)
-        synthesize_audio_output(response, output_path=response_path)
-        logger.info(f"Saved audio response: {response_path}")
-        return jsonify({"text": response, "audio": f"/audio_perception/{response_file}"})
-    except ValidationError as err:
-        logger.error(f"Validation error: {err.messages}")
-        return jsonify({"error": err.messages}), 400
+        
+        # Generate audio
+        audio_content = synthesize_audio_output(response)
+        
+        # Generate a unique filename
+        filename = f"{uuid.uuid4()}.mp3"
+        
+        # Upload to Supabase
+        _, error = supabase.storage.from_(OUTPUTS_BUCKET).upload(filename, audio_content)
+        if error:
+            raise Exception(f"Error uploading to Supabase: {error}")
+        
+        # Get public URL
+        audio_url = supabase.storage.from_(OUTPUTS_BUCKET).get_public_url(filename)
+        
+        logger.info(f"Uploaded audio response: {audio_url}")
+        return jsonify({"text": response, "audio": audio_url})
     except Exception as e:
         logger.error(f"Error in initiate_query: {str(e)}")
-        return jsonify({"error": "Internal Server Error"}), 500
-
-@app.route("/audio_perception/<filename>")
-def audio_perception(filename):
-    try:
-        return send_file(os.path.join(OUTPUTS_FOLDER, filename), mimetype="audio/mp3", as_attachment=False)
-    except Exception as e:
-        logger.error(f"Error in audio_perception: {str(e)}")
-        return jsonify({"error": "Internal Server Error"}), 500
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/<path:path>")
 def serve_static(path):

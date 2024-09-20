@@ -20,6 +20,7 @@ logs/
 
 # Backup files
 bak/
+.bak
 
 # Cache Files
 __pycache__/
